@@ -12,6 +12,10 @@ services:
         as: 80
         to:
           - global: true
+    params:
+      storage:
+        shm:
+          mount: /dev/shm
 
 profiles:
   compute:
@@ -22,7 +26,12 @@ profiles:
         memory:
           size: 24Gi
         storage:
-          size: 100Gi
+          - size: 100Gi
+          - name: shm
+            size: 10Gi
+            attributes:
+              class: ram
+              persistent: false
         gpu:
           units: 1
           attributes:
